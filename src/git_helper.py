@@ -56,11 +56,8 @@ def copy_md_files(src_dir, dest_dir):
                 src_file = os.path.join(root, file)
                 dest_file = os.path.join(dest_dir, file)
 
-                counter = 1
-                while os.path.exists(dest_file):
-                    dest_file = os.path.join(dest_dir, f"{file[:-3]}_{counter}.md")
-                    counter += 1
-                shutil.copy(src_file, dest_file)
+                if not os.path.exists(dest_file) or os.path.getmtime(src_file) > os.path.getmtime(dest_file):
+                    shutil.copy2(src_file, dest_file)
 
 def git_helper():
     repo_url = "https://github.com/github/docs.git"
