@@ -4,5 +4,14 @@
     "service": "app",
     "workspaceFolder": "/workspaces/Dev-Container-Compose",
     "postStartCommand": "pip install -r requirements.txt && alias py=python",
-    "forwardPorts": [8080]
+    "forwardPorts": [
+        8080
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "esbenp.prettier-vscode"
+            ]
+        }
+    }
 }
