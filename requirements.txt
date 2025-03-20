@@ -7,3 +7,4 @@ pypdf
 pytest
 langchain_ollama
 pysqlite3-binary
+openai

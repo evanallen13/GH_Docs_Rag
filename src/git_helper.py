@@ -6,6 +6,7 @@ import shutil
 def clone_or_update_github_docs(target_dir, repo_url):
     if os.path.exists(target_dir):
         print(f"Repository already cloned in '{target_dir}'. Pulling latest changes...")
+        return
         try:
             result = subprocess.run(
                 ["git", "-C", target_dir, "pull"],

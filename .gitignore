@@ -1,5 +1,6 @@
 gh_docs/
 data/
+chroma/
 
 # Python
 __pycache__/
