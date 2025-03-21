@@ -1,4 +1,4 @@
-Loading documents...
+
 page_content='---
 title: Reviewing deployments
 shortTitle: Review deployments
