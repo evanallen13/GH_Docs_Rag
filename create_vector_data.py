@@ -15,7 +15,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
-def main():
+if __name__ == "__main__":
     print("Loading documents...")
     doc_loader = document_loader()
     documents = doc_loader.load_documents()
@@ -27,17 +27,20 @@ def main():
     )
 
     conn_string = os.getenv("AZURE_COSMOS_CONNECTION_STRING")
-    client: MongoClient = MongoClient(
+
+    mongo_client = MongoClient(
         conn_string,
         serverSelectionTimeoutMS=60000,
         connectTimeoutMS=60000,
         socketTimeoutMS=60000
     )
-    collection = client["AI"]["VectorStore"]
+    
+    collection = mongo_client["AI"]["VectorStore"]
     try:
         print("Testing connection to Cosmos DB...")
         # List databases to verify connection works
-        dbs = client.list_database_names()
+        dbs = mongo_client.list_database_names()
+        exit(0)
         print(f"Available databases: {dbs}")
         
         # Check if our database exists
@@ -47,11 +50,11 @@ def main():
         if db_name not in dbs:
             print(f"Database '{db_name}' not found. Creating it...")
             # In MongoDB, databases are created when first referenced
-            db = client[db_name]
+            db = mongo_client[db_name]
             print(f"Created database '{db_name}'")
         else:
             print(f"Database '{db_name}' already exists")
-            db = client[db_name]
+            db = mongo_client[db_name]
         
         # Check if collection exists
         collections = db.list_collection_names()
@@ -107,7 +110,3 @@ def main():
     #     # print("--------")
     #     # print(embed)
     #     # print("\n \n")
-        
-
-if __name__ == "__main__":
-    main() 
