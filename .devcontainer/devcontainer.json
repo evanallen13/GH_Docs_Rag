@@ -10,7 +10,8 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "esbenp.prettier-vscode"
+                "esbenp.prettier-vscode",
+                "ms-vscode.azurecli"
             ]
         }
     }

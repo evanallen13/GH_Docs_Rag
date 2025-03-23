@@ -1,19 +1,21 @@
-
+#!/bin/bash
 # Set variables
-resourceGroupName="ai"
+resourceGroupName="ai-46546"
 location="EastUS"  # Change to your preferred region
-cosmosDbAccountName="MyCosmosDbAccount"  # Must be globally unique
+cosmosDbAccountName="qy-424324"  # Must be globally unique
 databaseName="MyDatabase"
 
-# az group create \
-#   --name $resourceGroupName \
-#   --location $location
+az group create \
+  --name $resourceGroupName \
+  --location $location
 
 az cosmosdb create \
   --name $cosmosDbAccountName \
   --resource-group $resourceGroupName \
-  --location $location \
- --kind GlobalDocumentDB
+  --locations regionName=$location failoverPriority=0 isZoneRedundant=false \
+  --kind GlobalDocumentDB \
+  --default-consistency-level Session \
+  --enable-free-tier true
 
 az cosmosdb sql database create \
   --account-name $cosmosDbAccountName \
