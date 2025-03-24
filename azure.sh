@@ -8,31 +8,32 @@ databaseName="MyDatabase"
 containerName="MyContainer"
 partitionKey="/id"
 
-# # Create resource group
-# az group create \
-#   --name $resourceGroupName \
-#   --location $location
+# Create resource group
+az group create \
+  --name $resourceGroupName \
+  --location $location
 
-# # Create Cosmos DB account with vector support
-# az cosmosdb create \
-#   --name $cosmosDbAccountName \
-#   --resource-group $resourceGroupName \
-#   --locations regionName=$location failoverPriority=0 isZoneRedundant=false \
-#   --kind GlobalDocumentDB \
-#   --default-consistency-level Session \
-#   --enable-free-tier true
+# Create Cosmos DB account with vector support
+az cosmosdb create \
+  --name $cosmosDbAccountName \
+  --resource-group $resourceGroupName \
+  --locations regionName=$location failoverPriority=0 isZoneRedundant=false \
+  --kind GlobalDocumentDB \
+  --default-consistency-level Session
+  #  \
+  # --enable-free-tier true
 
-# # Enable vector search capabilities
-# az cosmosdb update \
-#   --resource-group $resourceGroupName \
-#   --name $cosmosDbAccountName \
-#   --capabilities EnableNoSQLVectorSearch
+# Enable vector search capabilities
+az cosmosdb update \
+  --resource-group $resourceGroupName \
+  --name $cosmosDbAccountName \
+  --capabilities EnableNoSQLVectorSearch
 
-# # Create the SQL database
-# az cosmosdb sql database create \
-#   --account-name $cosmosDbAccountName \
-#   --resource-group $resourceGroupName \
-#   --name $databaseName
+# Create the SQL database
+az cosmosdb sql database create \
+  --account-name $cosmosDbAccountName \
+  --resource-group $resourceGroupName \
+  --name $databaseName
 
 # Define the indexing policy (as JSON)
 indexingPolicy=$(cat <<EOF
@@ -52,7 +53,14 @@ indexingPolicy=$(cat <<EOF
       "path": "/coverImageVector/*"
     }
   ],
-  "fullTextIndexes": []
+  "fullTextIndexes": [],
+  "vectorIndexes": [
+    {
+        "path": "/contentVector",
+        "type": "diskANN",
+        "quantizationByteSize": 512,
+        "indexingSearchListSize": 100
+  }]
 }
 EOF
 )
