@@ -8,3 +8,8 @@ pytest
 langchain_ollama
 pysqlite3-binary
 openai
+langchain_openai
+openai
+azure.cosmos 
+azure.identity
+dotenv

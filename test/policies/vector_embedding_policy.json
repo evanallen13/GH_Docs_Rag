@@ -1,0 +1,9 @@
+{ 
+    "vectorEmbeddings": [ 
+    { 
+        "path": "/coverImageVector", 
+        "dataType": "float32", 
+        "distanceFunction": "dotproduct", 
+        "dimensions": 8 
+    }] 
+}
