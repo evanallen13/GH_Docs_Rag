@@ -42,11 +42,11 @@ for item in items:
     print(json.dumps(item, indent=2))
     
 print("Request Units consumed: ",container.client_connection.last_response_headers['x-ms-request-charge'])
-print("Index Utilization Info: ")
+# print("Index Utilization Info: ")
 
-print(json.dumps(container.client_connection.last_response_headers['x-ms-cosmos-index-utilization'], indent=4))
+# print(json.dumps(container.client_connection.last_response_headers['x-ms-cosmos-index-utilization'], indent=4))
 
-print("Query Metrics: ")
+# print("Query Metrics: ")
 
-for i in container.client_connection.last_response_headers['x-ms-documentdb-query-metrics'].split(";"):
-    print(i)
+# for i in container.client_connection.last_response_headers['x-ms-documentdb-query-metrics'].split(";"):
+#     print(i)
