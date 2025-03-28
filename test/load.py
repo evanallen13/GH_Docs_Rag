@@ -8,13 +8,10 @@ load_dotenv()
 
 EMBEDDING_MODEL="text-embedding-ada-002"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-# Initialize the Cosmos client
 COSMOS_URL = os.getenv("COSMOS_URL")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 
 client = CosmosClient(COSMOS_URL, credential=COSMOS_KEY )
-
-# Get the database and container you want to access
 database_name = "MyDatabase"
 container_name = "bookstore"
 database = client.get_database_client(database_name)
