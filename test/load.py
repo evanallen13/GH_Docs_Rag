@@ -12,7 +12,7 @@ load_dotenv()
 
 EMBEDDING_MODEL="text-embedding-ada-002"
 DB_NAME = 'MyDatabase'
-CONTAINER_NAME = 'bookstore_small'
+CONTAINER_NAME = 'bookstore'
 COSMOS_DB_ACCOUNT = os.getenv("COSMOS_DB_ACCOUNT")
 AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 
@@ -20,7 +20,7 @@ with open("./test/policies/indexing_policy.json", "r") as file: indexing_policy 
 with open("./test/policies/vector_embedding_policy.json", "r") as file: vector_embedding_policy = json.load(file)
 
 aad_credentials = DefaultAzureCredential()
-db=CosmosClient("https://qy-111.documents.azure.com:443/", aad_credentials).get_database_client(DB_NAME)
+db=CosmosClient("https://test43442343.documents.azure.com:443/", aad_credentials).get_database_client(DB_NAME)
 
 try:
     container = db.create_container_if_not_exists(
@@ -63,6 +63,7 @@ client = AzureOpenAI(
 with open('book_details.csv', mode='r', encoding='utf-8') as file:
     csv_reader = csv.DictReader(file)
 
+    n=0
     for row in csv_reader:
         book_id = str(uuid.uuid4())
         title = row['title']
@@ -72,3 +73,7 @@ with open('book_details.csv', mode='r', encoding='utf-8') as file:
         embedded = query_embedding = client.embeddings.create(model=EMBEDDING_MODEL, input=(title + " " + description)).data[0].embedding  # Access the embedding vector
         
         add_book(container, book_id, isbn, title, description, author, embedded)
+        
+        n+=1
+        if n % 100 == 0:
+            break
