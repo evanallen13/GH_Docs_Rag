@@ -5,7 +5,7 @@ resourceGroupName="ai-9898"
 location="EastUS"
 cosmosDbAccountName="qy-889"  # Must be globally unique
 databaseName="MyDatabase"
-containerName="MyContainer"
+# containerName="MyContainer"
 partitionKey="/id"
 
 # Create resource group
@@ -32,3 +32,10 @@ az cosmosdb sql database create \
   --account-name $cosmosDbAccountName \
   --resource-group $resourceGroupName \
   --name $databaseName
+
+
+curl -X GET "https://qy-889.documents.azure.com:443/dbs/MyDatabase/colls/bookstore" \
+    -H "x-ms-date: $(date -u +'%a, %d %b %Y %H:%M:%S GMT')" \
+    -H "x-ms-version: 2018-12-31" \
+    -H "Authorization: aLgLfBJUBtcTe4VHL4xVPCCzzSrz4DlKKZiHqCwTxHsrUjsjI88ymY5XcA5JG4z2oiJxeiSX8Q8yACDbiLytNg==" \
+    -H "Content-Type: application/json"
