@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <form method="POST">
+        
+        <!-- <label for="output_text">Output:</label><br> -->
+        <textarea id="output_text" name="output_text" rows="10" cols="60" readonly>{{ output_text }}</textarea><br><br>
+
+        <!-- <label for="input_text">Input:</label><br> -->
+        <input type="text" id="input_text" name="input_text" value="{{ input_text }}" style="width: 300px;"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
