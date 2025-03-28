@@ -12,11 +12,11 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 COSMOS_URL = os.getenv("COSMOS_URL")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 
-client = CosmosClient(COSMOS_URL, credential=COSMOS_KEY )
-database_name = "MyDatabase"
-container_name = "docs"
-database = client.get_database_client(database_name)
-container = database.get_container_client(container_name)
+# client = CosmosClient(COSMOS_URL, credential=COSMOS_KEY )
+# database_name = "MyDatabase"
+# container_name = "docs"
+# database = client.get_database_client(database_name)
+# container = database.get_container_client(container_name)
 
 openai_embeddings = OpenAIEmbeddings(
     model=EMBEDDING_MODEL,

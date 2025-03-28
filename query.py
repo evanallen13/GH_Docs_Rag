@@ -24,7 +24,7 @@ openai_embeddings = OpenAIEmbeddings(
 query_string = "How much does Copilot Enterprise cost?"
 query_embedding = openai_embeddings.embed_query(query_string)
 
-k_num = 3
+k_num = 5
 query = f'SELECT TOP {k_num} c.id, c.filename, VectorDistance(c.vector, @embedding) AS SimilarityScore FROM c ORDER BY VectorDistance(c.vector, @embedding)'
 parameters = [{"name": "@embedding", "value": query_embedding}]
 

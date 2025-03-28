@@ -46,22 +46,58 @@ def clone_or_update_github_docs(target_dir, repo_url):
             print(f"An unexpected error occurred: {e}")
             return False
 
+# def copy_md_files(src_dir, dest_dir):
+#     print(f"Copying markdown files from '{src_dir}' to '{dest_dir}'...")
+#     if not os.path.exists(dest_dir):
+#         os.makedirs(dest_dir)
+
+#     for root, dirs, files in os.walk(src_dir):
+#         for file in files:
+#             if file.endswith('.md'):
+#                 src_file = os.path.join(root, file)
+#                 dest_file = os.path.join(dest_dir, file)
+
+#                 if not os.path.exists(dest_file) or os.path.getmtime(src_file) > os.path.getmtime(dest_file):
+#                     shutil.copy2(src_file, dest_file)
+
+import os
+import shutil
+
 def copy_md_files(src_dir, dest_dir):
     print(f"Copying markdown files from '{src_dir}' to '{dest_dir}'...")
+
+    # Ensure the destination directory exists
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
+    # Walk through the source directory
     for root, dirs, files in os.walk(src_dir):
         for file in files:
             if file.endswith('.md'):
-                src_file = os.path.join(root, file)
-                dest_file = os.path.join(dest_dir, file)
+                # Get the relative path of the current file within the source directory
+                relative_path = os.path.relpath(root, src_dir)
+                # Create the destination path by joining the base destination dir with the relative path
+                dest_subdir = os.path.join(dest_dir, relative_path)
 
+                # Ensure that the subdirectories exist in the destination
+                if not os.path.exists(dest_subdir):
+                    os.makedirs(dest_subdir)
+
+                # Define the source and destination file paths
+                src_file = os.path.join(root, file)
+                dest_file = os.path.join(dest_subdir, file)
+
+                # Only copy the file if it doesn't exist or if it's newer in the source
                 if not os.path.exists(dest_file) or os.path.getmtime(src_file) > os.path.getmtime(dest_file):
                     shutil.copy2(src_file, dest_file)
+                    print(f"Copied: {src_file} to {dest_file}")
 
 def git_helper():
     repo_url = "https://github.com/github/docs.git"
     target_dir = "gh_docs"
     result = clone_or_update_github_docs(target_dir, repo_url)
     copy_md_files(f'{target_dir}/content', 'data')
+    
+if __name__ == "__main__":
+    git_helper()
+    print("GitHub docs repository is ready.")
