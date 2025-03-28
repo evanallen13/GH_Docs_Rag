@@ -3,14 +3,16 @@ from langchain_openai import OpenAIEmbeddings
 import os
 import csv
 import random
+from dotenv import load_dotenv
+load_dotenv()
 
 EMBEDDING_MODEL="text-embedding-ada-002"
-OPENAI_API_KEY = "sk-zn2xLzFwvWc4PE8d6NeJH5QxG5ALchYB6xeiPNivtlT3BlbkFJx36tbtyYtQKs6OoKiCE-zOjwXJKiAK66Apcxsiyi4A"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # Initialize the Cosmos client
-url = "https://qy-889.documents.azure.com:443/"
-key = "aLgLfBJUBtcTe4VHL4xVPCCzzSrz4DlKKZiHqCwTxHsrUjsjI88ymY5XcA5JG4z2oiJxeiSX8Q8yACDbiLytNg=="
+COSMOS_URL = os.getenv("COSMOS_URL")
+COSMOS_KEY = os.getenv("COSMOS_KEY")
 
-client = CosmosClient(url, credential=key)
+client = CosmosClient(COSMOS_URL, credential=COSMOS_KEY )
 
 # Get the database and container you want to access
 database_name = "MyDatabase"
