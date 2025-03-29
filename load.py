@@ -31,8 +31,8 @@ doc_loader = document_loader()
 documents = doc_loader.load_documents()
 sliced_documents = doc_loader.split_documents(documents) 
 
-print(f"Adding {len(sliced_documents)} documents to Cosmos.")
 file_name = {}
+n=0
 for doc in sliced_documents:
     title = doc.metadata['source']
     content = doc.page_content
@@ -46,7 +46,7 @@ for doc in sliced_documents:
         file_name[title] = page_num 
         
     document = {
-        "filename": title,
+        "filename": title.replace("data/", ""),
         "page": page_num,
         "content": content,
         "vector": embed,
@@ -54,6 +54,6 @@ for doc in sliced_documents:
     }
     try:
         container.create_item(body=document)
-        print(f"Book '{title}' added successfully.")
+        print(f"{title} {page_num} added successfully.")
     except exceptions.CosmosHttpResponseError as e:
         print(f"Failed to add book '{title}': {e.message}")
