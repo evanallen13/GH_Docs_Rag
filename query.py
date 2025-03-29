@@ -25,10 +25,10 @@ openai_embeddings = OpenAIEmbeddings(
     openai_api_key=OPENAI_API_KEY
 )
 
-query_string = "How much does Copilot Enterprise cost?"
+query_string = "You are tasked with ensuring that every repository in your GitHub organization has a code of conduct file. Which of the following GitHub features can you use to enforce this policy across all repositories?"
 query_embedding = openai_embeddings.embed_query(query_string)
 
-k_num = 2
+k_num = 5
 query = f'SELECT TOP {k_num} c.id, c.filename, c.content, VectorDistance(c.vector, @embedding) AS SimilarityScore FROM c ORDER BY VectorDistance(c.vector, @embedding)'
 parameters = [{"name": "@embedding", "value": query_embedding}]
 

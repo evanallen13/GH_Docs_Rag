@@ -11,7 +11,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama:11434")
-MODEL = "gemma3:1b" # Find available models here https://ollama.com/library
+MODEL = "gemma3:4b" # Find available models here https://ollama.com/library
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
